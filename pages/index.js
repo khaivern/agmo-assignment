@@ -12,6 +12,8 @@ import {
   Checkbox,
   Modal,
   Link,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
@@ -92,6 +94,9 @@ export default function Home() {
   // Manage the forget password link
   const [passwordModalIsVisible, setPasswordModalIsVisible] = useState(false);
 
+  // Manage the snackbar view
+  const [snackbarIsVisible, setSnackbarIsVisible] = useState(false);
+
   /*
    *   Functions
    */
@@ -137,14 +142,19 @@ export default function Home() {
     setPasswordModalIsVisible(false);
   };
 
+  const handleSnackbarClose = () => {
+    setSnackbarIsVisible(false);
+  };
+
   // When user clicks on sign in
   const authHandler = (e) => {
     e.preventDefault();
     setServerErrorMessage("");
     // optional: send request to backend server.
-    console.log({ emailInput, passwordInput, checkboxInput, authenticated: "Yes?" });
+    console.log({ emailInput, passwordInput, checkboxInput });
     // try-catch
     setServerErrorMessage(""); // if error response from server
+    setSnackbarIsVisible(true);
   };
 
   return (
@@ -335,6 +345,13 @@ export default function Home() {
                     </Typography>
                   </Grid>
                 )}
+                <Snackbar
+                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                  open={snackbarIsVisible}
+                  autoHideDuration={6000}
+                  onClose={handleSnackbarClose}>
+                  <Alert severity='success'>Printed user inputs to the console</Alert>
+                </Snackbar>
               </Grid>
             </Box>
           </Grid>
