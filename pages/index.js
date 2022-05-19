@@ -14,9 +14,12 @@ import {
   Link,
   Snackbar,
   Alert,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 /*
  * CSS Styles
@@ -80,6 +83,9 @@ export default function Home() {
   // Manage what the user types in the input fields
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+
+  // Manage the visibility of the password field
+  const [showPassword, setShowPassword] = useState(false);
 
   // Manage what if incorrect fields are currently present
   const [emailHelperText, setEmailHelperText] = useState("");
@@ -145,6 +151,15 @@ export default function Home() {
   const handleSnackbarClose = () => {
     setSnackbarIsVisible(false);
   };
+
+  // Manage when user clicks on password visibility icon
+  const handleClickShowPassword = () => {
+    setShowPassword(curr => !curr)
+  }
+
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
+  }
 
   // When user clicks on sign in
   const authHandler = (e) => {
@@ -240,7 +255,21 @@ export default function Home() {
                   />
                   <TextField
                     sx={InputFieldStyles}
-                    InputProps={{ disableUnderline: true }}
+                    type={showPassword ? "text" : "password"}
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <IconButton
+                            aria-label='toggle password visibility'
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge='end'>
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                     margin='dense'
                     label='Password'
                     id='password'
