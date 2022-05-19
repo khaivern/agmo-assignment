@@ -307,6 +307,7 @@ export default function Home() {
                   {/* Forgot Password Link */}
                   <Link
                     component='button'
+                    type="button"
                     variant='body2'
                     onClick={openPasswordModalHandler}
                     underline='none'
